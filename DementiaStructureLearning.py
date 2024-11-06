@@ -16,7 +16,7 @@ data = data.dropna()
 data = data[~data.isin([float('inf'), -float('inf')]).any(axis = 1)]
 print("DATA:\n", data)
 
-# definition of directed acyclic graph (predefined Naive Bayes structure -- only for discretising data)
+#Definition of Directed Acyclic Graph
 edges = [('CDR', 'Subject_ID'),('CDR', 'MRI_ID'),('CDR', 'Group'),('CDR', 'Visit'),
          ('CDR', 'MR_Delay'),('CDR', 'M/F'),('CDR', 'Hand'),('CDR', 'Age'),
 		 ('CDR', 'EDUC'),('CDR', 'SES'),('CDR', 'MMSE'),('CDR', 'eTIV'),('CDR', 'nWBV'),('CDR', 'ASF')]
