@@ -2,9 +2,7 @@ import bnlearn as bn
 import pandas as pd
 
 # definition of directed acyclic graphs (predefined structures)
-edges = [('CDR', 'Subject_ID'),('CDR', 'MRI_ID'),('CDR', 'Group'),('CDR', 'Visit'),
-         ('CDR', 'MR_Delay'),('CDR', 'M/F'),('CDR', 'Hand'),('CDR', 'Age'),
-		 ('CDR', 'EDUC'),('CDR', 'SES'),('CDR', 'MMSE'),('CDR', 'eTIV'),('CDR', 'nWBV'),('CDR', 'ASF')]
+edges = [('CDR', 'Subject_ID'),('CDR', 'MRI_ID'),('CDR', 'Group'),('CDR', 'Visit'),('CDR', 'MR_Delay'),('CDR', 'M/F'),('CDR', 'Hand'),('CDR', 'Age'),('CDR', 'EDUC'),('CDR', 'SES'),('CDR', 'MMSE'),('CDR', 'eTIV'),('CDR', 'nWBV'),('CDR', 'ASF')]
 
 # examples of training data include 'data\lung_cancer-train.csv' or  'data\lang_detect_train.csv', etc.
 # examples of net structure (as below): edges_langdet1, edges_langdet2, edges_lungcancer1, edges_lungcancer2
@@ -17,7 +15,7 @@ CONDITIONAL_INDEPENDENCE_TEST = 'cressie_read'
 data = pd.read_csv(TRAINING_DATA, encoding='UTF-8')
 print("DATA:\n", data)
 
- # creation of the directed acyclic graph (DAG)
+# creation of the directed acyclic graph (DAG)
 DAG = bn.make_DAG(NETWORK_STRUCTURE)
 print("DAG:\n", DAG)
 
