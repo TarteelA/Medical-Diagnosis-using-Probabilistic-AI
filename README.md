@@ -1,0 +1,7 @@
+# Medical Diagnosis using Probabilistic AI
+
+This project harnesses the power of Probabilistic AI and Bayesian Networks to predict the progression of dementia using both MRI and clinical data. By applying advanced inference algorithms, the model uncovers complex probabilistic relationships between key medical features such as age, MMSE scores, and MRI-derived metrics. These insights are crucial for understanding how various factors contribute to the onset and progression of dementia, enabling more accurate predictions of disease trajectories.
+
+The model’s ability to identify these relationships offers significant value in the early diagnosis and prognosis of dementia. By analyzing patterns in the data, it can detect early signs of dementia progression, even before clinical symptoms appear. This provides healthcare professionals with a powerful tool for identifying at-risk individuals, allowing for early interventions and personalized care plans that can help improve long-term patient outcomes.
+
+Ultimately, the goal of this project is to support healthcare professionals in making data-driven decisions by offering a deeper understanding of the uncertainty and potential outcomes associated with dementia-related conditions. By leveraging AI-driven probabilistic reasoning, the model helps navigate the complexities of dementia diagnosis, offering insights that lead to more informed decisions, better treatment strategies, and improved care for patients facing this challenging condition.
