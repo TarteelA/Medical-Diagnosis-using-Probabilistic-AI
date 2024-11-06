@@ -1,16 +1,16 @@
+#Import Libraries
 import bnlearn as bn
 import pandas as pd
 import networkx as nx
 import matplotlib.pyplot as plt
 
-# examples of training data include 'data\lung_cancer-train.csv' or  'data\lang_detect_train.csv', etc.
-# choices of scoring functions: bic, k2, bdeu, bds, aic
+#Choices Of Scoring Functions: bic, k2, bdeu, bds, aic
 TRAINING_DATA = './data/dementia_data-MRI-features.csv'
 SCORING_FUNCTION = 'bic'
 MAX_ITERATIONS=20000000
 VISUALISE_STRUCTURE=True
 
-# data loading using pandas, but only the first 1K rows due to memory issues
+#Data Loading Using Pandas
 data = pd.read_csv(TRAINING_DATA, encoding='UTF-8', nrows=374)
 data = data.dropna()
 data = data[~data.isin([float('inf'), -float('inf')]).any(axis=1)]
@@ -21,21 +21,20 @@ edges = [('CDR', 'Subject_ID'),('CDR', 'MRI_ID'),('CDR', 'Group'),('CDR', 'Visit
          ('CDR', 'MR_Delay'),('CDR', 'M/F'),('CDR', 'Hand'),('CDR', 'Age'),
 		 ('CDR', 'EDUC'),('CDR', 'SES'),('CDR', 'MMSE'),('CDR', 'eTIV'),('CDR', 'nWBV'),('CDR', 'ASF')]
 
-# performs discretisation of continuous data for the columns specified and structure provided
-# the output of this steps is later used for training a Bayesian network -- no longer the original dataset
+#Performs Discretisation Of Continuous Data For Columns Specified and Structure Provided Used For Training Bayesian Network
 continuous_columns = ["MR_Delay", "Age", "EDUC", "SES", "MMSE", "CDR", "eTIV", "nWBV", "ASF"]
 discrete_data = bn.discretize(data, edges, continuous_columns, max_iterations=1, verbose=3)
 for randvar in discrete_data:
     print("VARIABLE:",randvar)
     print(discrete_data[randvar])
 
-# structure learning using a chosen scoring function as per SCORING_FUNCTION
+#Structure Learning Using Chosen Scoring Function as per SCORING_FUNCTION
 model = bn.structure_learning.fit(discrete_data, methodtype='hillclimbsearch', scoretype=SCORING_FUNCTION, max_iter=MAX_ITERATIONS)
 num_model_edges = len(model['model_edges'])
 print("model=",model)
 print("num_model_edges="+str(num_model_edges))
 
-# visualise the learnt structure
+#Visualise The Learnt Structure
 if VISUALISE_STRUCTURE:
     G = nx.DiGraph()
     G.add_edges_from(model['model_edges'])
@@ -45,12 +44,12 @@ if VISUALISE_STRUCTURE:
     plt.title('Directed Acyclic Graph (DAG)')
     plt.show()
 
-# parameter learning using Maximum Likelihood Estimation (MLE) and discretised data -- not original data
+#Parameter Learning Using Maximum Likelihood Estimation (MLE) and Discretised Data
 DAG = bn.make_DAG(model['model_edges'])
 model = bn.parameter_learning.fit(DAG, discrete_data, methodtype="maximumlikelihood")
 print("model=",model)
 
-# probabilistic inference for a test example -- not part of the training data
+#Probabilistic Inference For Test Example
 discretised_evidence = { 
 'MR_Delay':bn.discretize_value(discrete_data["MR_Delay"], 457), 
 'Age':bn.discretize_value(discrete_data["Age"], 88), 
