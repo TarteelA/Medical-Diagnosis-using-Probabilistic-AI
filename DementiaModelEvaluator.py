@@ -66,7 +66,7 @@ class ModelEvaluator(BayesNetInference):
     def discretize_target_variable(self):
         # Define the discretization logic (for example, using quantiles or thresholds)
         for i, data_point in enumerate(self.csv.rv_all_values):
-            asf_value = float(data_point[-1])  # Assuming last column is ASF
+            asf_value = float(data_point[-1])
             if asf_value < 1.0:
                 self.csv.rv_all_values[i][-1] = "Low"
             elif 1.0 <= asf_value < 1.5:
