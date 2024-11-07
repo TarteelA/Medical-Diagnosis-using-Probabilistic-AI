@@ -1,0 +1,5 @@
+name:Parkinson
+
+random_variables:PPE(PPE);name(name);MDVP:Fo(Hz)(MDVP:Fo(Hz));MDVP:Fhi(Hz)(MDVP:Fhi(Hz));MDVP:Flo(Hz)(MDVP:Flo(Hz));MDVP:Jitter(%)(MDVP:Jitter(%));MDVP:Jitter(Abs)(MDVP:Jitter(Abs));MDVP:RAP(MDVP:RAP);MDVP:PPQ(MDVP:PPQ);Jitter:DDP(Jitter:DDP);MDVP:Shimmer(MDVP:Shimmer);MDVP:Shimmer(dB)(MDVP:Shimmer(dB));Shimmer:APQ3(Shimmer:APQ3);Shimmer:APQ5(Shimmer:APQ5);MDVP:APQ(MDVP:APQ);Shimmer:DDA(Shimmer:DDA);NHR(NHR);HNR(HNR);status(status);RPDE(RPDE);DFA(DFA);spread1(spread1);spread2(spread2);D2(D2)
+
+structure:P(PPE);P(name|PPE);P(MDVP:Fo(Hz)|PPE);P(MDVP:Fhi(Hz)|PPE);P(MDVP:Flo(Hz)|PPE);P(MDVP:Jitter(%)|PPE);P(MDVP:Jitter(Abs)|PPE);P(MDVP:RAP|PPE);P(MDVP:PPQ|PPE);P(Jitter:DDP|PPE);P(MDVP:Shimmer|PPE);P(MDVP:Shimmer(dB)|PPE);P(Shimmer:APQ3|PPE);P(Shimmer:APQ5|PPE);P(MDVP:APQ|PPE);P(Shimmer:DDA|PPE);P(NHR|PPE);P(HNR|PPE);P(status|PPE);P(RPDE|PPE);P(DFA|PPE);P(spread1|PPE);P(spread2|PPE);P(D2|PPE)
