@@ -1,32 +1,7 @@
-#############################################################################
-# ModelEvaluator.py
-#
-# Implements the following performance metrics and scoring functions:
-# Balanced Accuracy, F1 Score, Area Under Curve (AUC), 
-# Brier Score, Kulback-Leibler Divergence (KLL), training/test times.
-# Log Likelihood (LL), Bayesian Information Criterion (BIC).
-#
-# IMPORTANT: This program currently makes use of two instantiations of
-# NB_Classifier: one for training and one for testing. If you want this
-# program to work for any arbitrary Bayes Net, the constructor (__init__) 
-# needs to be updated to support a trainer (via CPT_Generator) and a
-# tester (e.g., via BayesNetExactInference) -- instead of Naive Bayes models.
-#
-# This implementation also assumes that normalised probability distributions
-# of predictions are stored in an array called "NB_Classifier.predictions".
-# Performance metrics need such information to do the required calculations.
-#
-# This program has been tested for Binary classifiers. Minor extensions are
-# needed should you wish this program to work for non-binary classifiers.
-#
-# Version: 1.0, Date: 03 October 2022, basic functionality
-# Version: 1.1, Date: 15 October 2022, extended with performance metrics
-# Version: 1.2, Date: 18 October 2022, extended with LL and BIC functions (removed)
-# Version: 1.3, Date: 21 October 2023, refactored for increased reusability 
-# Version: 1.4, Date: 22 September 2024, Naive Bayes removed to focus on Bayes nets
-# Contact: hcuayahuitl@lincoln.ac.uk
-#############################################################################
+#Edited By Tarteel Alkaraan (25847208)
+#Updated On: 07 November 2024
 
+#Import Libraries
 import sys
 import math
 import time
@@ -39,25 +14,24 @@ import BayesNetUtil as bnu
 from DataReader import CSV_DataReader
 from BayesNetInference import BayesNetInference
 
-
+#Declare Model Evaluator Class
 class ModelEvaluator(BayesNetInference):
     verbose = False 
     inference_time = None
 
     def __init__(self, configfile_name, datafile_test):
         if os.path.isfile(configfile_name):
-            # loads Bayesian network stored in configfile_name, where
-            # the None arguments prevent any inference at this time
+            #Loads Bayesian Network Stored In ConfigFile_Name
             super().__init__(None, configfile_name, None, None)
             self.inference_time = time.time()
 
-        # reads test data using code from DataReader
+        #Reads Test Data Using Code From DataReader
         self.csv = CSV_DataReader(datafile_test)
         
-        # Apply discretization checks here if necessary
+        #Apply Discretization Checks
         self.discretize_target_variable()
 
-        # generates performance results from the predictions above  
+        #Generates Performance Results From Above Predictions
         self.inference_time = time.time()
         true, pred, prob = self.get_true_and_predicted_targets()
         self.inference_time = time.time() - self.inference_time
@@ -100,8 +74,8 @@ class ModelEvaluator(BayesNetInference):
                 print(f"Unknown target value: {target_value}")
             
             # Probabilistic prediction logic placeholder
-            Y_pred.append(1 if target_value in threshold_one else 0)  # Modify as necessary
-            Y_prob.append(float(target_value) if target_value in ["0", "1"] else 0.5)  # Example adjustment
+            Y_pred.append(1 if target_value in threshold_one else 0)
+            Y_prob.append(float(target_value) if target_value in ["0", "1"] else 0.5)
 
         return Y_true, Y_pred, Y_prob
 
