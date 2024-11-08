@@ -9,7 +9,7 @@ import pandas as pd
 edges = [('CDR', 'Subject_ID'),('CDR', 'MRI_ID'),('CDR', 'Group'),('CDR', 'Visit'),('CDR', 'MR_Delay'),('CDR', 'M/F'),('CDR', 'Hand'),('CDR', 'Age'),('CDR', 'EDUC'),('CDR', 'SES'),('CDR', 'MMSE'),('CDR', 'eTIV'),('CDR', 'nWBV'),('CDR', 'ASF')]
 
 #Set Training Data, Network Structure, And Type Of Conditional Independence Test
-TRAINING_DATA = './data/dementia_data-MRI-features.csv'
+TRAINING_DATA = 'Data/Dementia/train_fold_1.csv'
 NETWORK_STRUCTURE = edges
 CONDITIONAL_INDEPENDENCE_TEST = 'cressie_read'
 

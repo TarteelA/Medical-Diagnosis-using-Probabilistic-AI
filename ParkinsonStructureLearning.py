@@ -26,7 +26,7 @@ edges = [('status', 'name'),('status', 'MDVPFoHz'),('status', 'MDVPFhiHz'),('sta
 continuous_columns = ["MDVPFoHz", "MDVPFhiHz", "MDVPFloHz", "MDVPJitter%", "MDVPJitterAbs", "MDVPRAP", "MDVPPPQ", "JitterDDP", "MDVPShimmer", "MDVPShimmerdB", "ShimmerAPQ3", "ShimmerAPQ5", "MDVPAPQ", "NHR", "HNR", "RPDE", "DFA", "spread1", "spread2", "D2", "PPE"]
 discrete_data = bn.discretize(data, edges, continuous_columns, max_iterations = 1, verbose = 3)
 for randvar in discrete_data:
-    print("VARIABLE:",randvar)
+    print("VARIABLE:", randvar)
     print(discrete_data[randvar])
 
 #Structure Learning Using Chosen Scoring Function As Per SCORING_FUNCTION

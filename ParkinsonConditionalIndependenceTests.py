@@ -9,7 +9,7 @@ import pandas as pd
 edges = [('status', 'name'),('status', 'MDVPFoHz'),('status', 'MDVPFhiHz'),('status', 'MDVPFloHz'),('status', 'MDVPJitter%'),('status', 'MDVPJitterAbs'),('status', 'MDVPRAP'),('status', 'MDVPPPQ'),('status', 'JitterDDP'),('status', 'MDVPShimmer'),('status', 'MDVPShimmerdB'),('status', 'ShimmerAPQ3'),('status', 'ShimmerAPQ5'),('status', 'MDVPAPQ'),('status', 'ShimmerDDA'),('status', 'NHR'),('status', 'HNR'),('status', 'RPDE'),('status', 'DFA'),('status', 'spread1'),('status', 'spread2'),('status', 'D2'),('status', 'PPE')]
 
 #Set Training Data, Network Structure, And Type Of Conditional Independence Test
-TRAINING_DATA = './data/parkinsons_data-VOICE-features.csv'
+TRAINING_DATA = 'Data/Parkinson/train_fold_1.csv'
 NETWORK_STRUCTURE = edges
 CONDITIONAL_INDEPENDENCE_TEST = 'cressie_read'
 

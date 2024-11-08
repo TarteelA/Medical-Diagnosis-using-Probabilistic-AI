@@ -26,7 +26,7 @@ edges = [('CDR', 'Subject_ID'),('CDR', 'MRI_ID'),('CDR', 'Group'),('CDR', 'Visit
 continuous_columns = ["MR_Delay", "Age", "EDUC", "SES", "MMSE", "CDR", "eTIV", "nWBV", "ASF"]
 discrete_data = bn.discretize(data, edges, continuous_columns, max_iterations = 1, verbose = 3)
 for randvar in discrete_data:
-    print("VARIABLE:",randvar)
+    print("VARIABLE:", randvar)
     print(discrete_data[randvar])
 
 #Structure Learning Using Chosen Scoring Function As Per SCORING_FUNCTION
