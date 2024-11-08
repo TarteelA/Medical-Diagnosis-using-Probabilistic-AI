@@ -26,7 +26,7 @@ for fold, (train_index, test_index) in enumerate(kf.split(X)):
     test_data = pd.concat([X_test, Y_test], axis=1)
     
     #Save To CSV Files In Dementia Folder
-    train_data.to_csv(f'data/train_fold_{fold + 1}.csv', index=False)
-    test_data.to_csv(f'data/test_fold_{fold + 1}.csv', index=False)
+    train_data.to_csv(f'Data/Dementia/train_fold_{fold + 1}.csv', index=False)
+    test_data.to_csv(f'Data/Dementia/test_fold_{fold + 1}.csv', index=False)
     
-    print(f"Fold {fold + 1} saved as data/train_fold_{fold + 1}.csv and data/test_fold_{fold + 1}.csv")
+    print(f"Fold {fold + 1} saved as Data/Dementia/train_fold_{fold + 1}.csv and Data/Dementia/test_fold_{fold + 1}.csv")
