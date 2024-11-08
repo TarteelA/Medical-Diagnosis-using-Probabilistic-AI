@@ -1,0 +1,5 @@
+name:Dementia
+
+random_variables:CDR(CDR);Subject_ID(Subject_ID);MRI_ID(MRI_ID);Group(Group);Visit(Visit);MR_Delay(MR_Delay);M/F(M/F);Hand(Hand);Age(Age);EDUC(EDUC);SES(SES);MMSE(MMSE);eTIV(eTIV);nWBV(nWBV);ASF(ASF)
+
+structure:P(CDR);P(Subject_ID|CDR);P(MRI_ID|CDR);P(Group|CDR);P(Visit|CDR);P(MR_Delay|CDR);P(M/F|CDR);P(Hand|CDR);P(Age|CDR);P(EDUC|CDR);P(SES|CDR);P(MMSE|CDR);P(eTIV|CDR);P(nWBV|CDR);P(ASF|CDR)

@@ -22,6 +22,7 @@ class ModelEvaluator(BayesNetInference):
         if os.path.isfile(configfile_name):
             #Loads Bayesian Network Stored In ConfigFile_Name
             super().__init__(None, configfile_name, None, None)
+            self.running_time = time.time()
             self.inference_time = time.time()
 
         #Reads Test Data Using Code From DataReader
@@ -34,6 +35,7 @@ class ModelEvaluator(BayesNetInference):
         self.inference_time = time.time()
         true, pred, prob = self.get_true_and_predicted_targets()
         self.inference_time = time.time() - self.inference_time
+        sel.running_time = time.time() - self.running_time
         self.compute_performance(true, pred, prob)
     
     def discretize_target_variable(self):
@@ -116,7 +118,7 @@ class ModelEvaluator(BayesNetInference):
         print("Area Under Curve="+str(auc))
         print("Brier Score="+str(brier))
         print("KL Divergence="+str(kl_div))        
-        print("Training Time=this number should come from the CPT_Generator!")
+        print("Training Time="+str(self.running_time)+" secs.")
         print("Inference Time="+str(self.inference_time)+" secs.")
 
 if __name__ == "__main__":

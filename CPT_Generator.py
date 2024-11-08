@@ -3,6 +3,7 @@
 
 #Import Libraries
 import sys
+import time
 from BayesNetReader import BayesNetReader
 from DataReader import CSV_DataReader
 
@@ -24,7 +25,7 @@ class CPT_Generator(BayesNetReader):
         self.generate_prior_and_conditional_countings()
         self.generate_probabilities_from_countings()
         self.write_CPTs_to_configuration_file()
-        sel.running_time = time.time() - self.running_time
+        self.running_time = time.time() - self.running_time
         print("Training Time="+str(self.running_time)+" secs.")
 
     def generate_prior_and_conditional_countings(self):
