@@ -5,13 +5,13 @@ import networkx as nx
 import matplotlib.pyplot as plt
 
 #Set Training Data, Type Of Scoring Function, Number Of Iterations, And Visualise Structure
-TRAINING_DATA = './data/dementia_data-MRI-features.csv'
+TRAINING_DATA = 'Data/Parkinson/train_fold_1.csv'
 SCORING_FUNCTION = 'aic'
 MAX_ITERATIONS = 20000000
 VISUALISE_STRUCTURE = True
 
 #Data Loading Using Pandas
-data = pd.read_csv(TRAINING_DATA, encoding = 'UTF-8', nrows = 196)
+data = pd.read_csv(TRAINING_DATA, encoding = 'UTF-8', nrows = 157)
 data = data.dropna()
 data = data[~data.isin([float('inf'), -float('inf')]).any(axis = 1)]
 print("DATA:\n", data)
@@ -38,6 +38,6 @@ if VISUALISE_STRUCTURE:
     G.add_edges_from(model['model_edges'])
     pos = nx.spring_layout(G)
     plt.figure(figsize = (8, 6))
-    nx.draw(G, pos, with_labels = True, node_size=500, node_color = 'lightgreen', font_size = 10, arrows = True)
+    nx.draw(G, pos, with_labels = True, node_size = 500, node_color = 'lightgreen', font_size = 10, arrows = True)
     plt.title('Directed Acyclic Graph (DAG)')
     plt.show()

@@ -12,7 +12,7 @@ X_train = np.array([
     [2.322511,0.231571],[2.432792,0.271362]
 ])
 
-X_test = np.array([[3.007463,0.430788],[2.846369,0.219514]])
+X_test = np.array([[],[]])
 
 #Compute RBF Kernel Vector
 gamma = 0.5
@@ -34,8 +34,8 @@ diff = np.abs(kernel_vector[0]-kernel_vector[1])
 print("gamma=%s diff=%s" % (gamma, diff))
 
 #Show Heatmap Of RBF Kernel Vector
-plt.figure(figsize=(8, 6))
-sns.heatmap(kernel_vectors, annot=True, cmap='viridis', square=True, cbar=True)
+plt.figure(figsize = (8, 6))
+sns.heatmap(kernel_vectors, annot = True, cmap = 'viridis', square = True, cbar = True)
 plt.title("RBF Kernel Vectors")
 plt.xlabel("X_train")
 plt.ylabel("X_test")

@@ -20,9 +20,12 @@ class CPT_Generator(BayesNetReader):
         self.configfile_name = configfile_name
         self.bn = BayesNetReader(configfile_name)
         self.csv = CSV_DataReader(datafile_name)
+        self.running_time = time.time()
         self.generate_prior_and_conditional_countings()
         self.generate_probabilities_from_countings()
         self.write_CPTs_to_configuration_file()
+        sel.running_time = time.time() - self.running_time
+        print("Training Time="+str(self.running_time)+" secs.")
 
     def generate_prior_and_conditional_countings(self):
         print("\nGENERATING countings for prior/conditional distributions...")

@@ -6,11 +6,10 @@ import sys
 import math
 import time
 import random
-import numpy as np
 import os.path
-from sklearn import metrics
-
+import numpy as np
 import BayesNetUtil as bnu
+from sklearn import metrics
 from DataReader import CSV_DataReader
 from BayesNetInference import BayesNetInference
 
@@ -38,7 +37,7 @@ class ModelEvaluator(BayesNetInference):
         self.compute_performance(true, pred, prob)
     
     def discretize_target_variable(self):
-        # Define the discretization logic (for example, using quantiles or thresholds)
+        #Define Discretization Logic Using Quantiles Or Thresholds
         for i, data_point in enumerate(self.csv.rv_all_values):
             asf_value = float(data_point[-1])
             if asf_value < 1.0:
@@ -55,35 +54,33 @@ class ModelEvaluator(BayesNetInference):
         Y_pred = []
         Y_prob = []
 
-        # Define threshold sets
+        #Define Threshold Sets
         threshold_one = set(["High"])
-        zero_values = set(["Low", "Medium"])  # Adjust according to discretization
+        zero_values = set(["Low", "Medium"])
 
-        # Loop through data points to categorize targets
+        #Loop Through Data Points To Categorize Targets
         for i in range(len(self.csv.rv_all_values)):
             data_point = self.csv.rv_all_values[i]
             target_value = data_point[len(self.csv.rand_vars) - 1]
 
-            # Classify based on target_value
+            #Classify Based On Target_Value
             if target_value in threshold_one:
                 Y_true.append(1)
             elif target_value in zero_values:
                 Y_true.append(0)
             else:
-                # Handle other cases or log unknown values for debugging
+                #Handle Or Log Unknown Values For Debugging
                 print(f"Unknown target value: {target_value}")
             
-            # Probabilistic prediction logic placeholder
+            #Probabilistic Prediction Logic Placeholder
             Y_pred.append(1 if target_value in threshold_one else 0)
             Y_prob.append(float(target_value) if target_value in ["0", "1"] else 0.5)
 
         return Y_true, Y_pred, Y_prob
 
-    # returns a probability distribution using Inference By Enumeration
+    #Returns Probability Distribution Using Inference By Enumeration
     def get_predictions_from_BayesNet(self, data_point, nbc):
-        # forms a probabilistic query based on the predictor variable,
-        # the evidence (non-predictor variables), and the values of
-        # the current data point (test instance) given as argument
+        #Forms Probabilistic Query Based On Predictor Variable
         evidence = ""
         for var_index in range(0, len(self.csv.rand_vars)-1):
             evidence += "," if len(evidence)>0 else ""
@@ -91,18 +88,14 @@ class ModelEvaluator(BayesNetInference):
         prob_query = "P(%s|%s)" % (self.csv.predictor_variable, evidence)
         self.query = bnu.tokenise_query(prob_query, False)
 
-        # sends query to BayesNetInference and get probability distribution
+        #Sends Query To BayesNetInference And Get Probability Distribution
         self.prob_dist = self.enumeration_ask()
         normalised_dist = bnu.normalise(self.prob_dist)
         if self.verbose: print("%s=%s" % (prob_query, normalised_dist))
 
         return normalised_dist
 
-    # prints model performance according to the following metrics:
-    # balanced accuracy, F1 score, AUC, Brier score, KL divergence,
-    # and training and test times. But note that training time is
-    # dependent on model training externally to this program, which
-    # is the case of Bayes nets trained via CPT_Generator.py    
+    #Prints Model Performance Metrics: Balanced Accuracy, F1 Score, AUC, Brier Score, KL Divergence, And Training & Test Times
     def compute_performance(self, Y_true, Y_pred, Y_prob):
         #Constant To Avoid NAN In KL Divergence
         P = np.asarray(Y_true)+0.00001
