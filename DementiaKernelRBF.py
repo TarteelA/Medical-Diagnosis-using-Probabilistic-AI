@@ -37,8 +37,8 @@ diff = np.abs(kernel_vector[0]-kernel_vector[1])
 print("gamma=%s diff=%s" % (gamma, diff))
 
 #Show Heatmap Of RBF Kernel Vector
-plt.figure(figsize=(8, 6))
-sns.heatmap(kernel_vectors, annot=True, cmap='viridis', square=True, cbar=True)
+plt.figure(figsize = (8, 6))
+sns.heatmap(kernel_vectors, annot = True, cmap = 'viridis', square = True, cbar = True)
 plt.title("RBF Kernel Vectors")
 plt.xlabel("X_train")
 plt.ylabel("X_test")
