@@ -1,44 +1,43 @@
+#Edited By Tarteel Alkaraan (25847208)
+#Updated On: 08 November 2024
 
-
-
+#Import Libraries
 import sys
 import math
 import time
 import random
-import numpy as np
 import os.path
-from sklearn import metrics
-
+import numpy as np
 import BayesNetUtil as bnu
+from sklearn import metrics
 from DataReader import CSV_DataReader
 from BayesNetInference import BayesNetInference
 
-
+#Declare Model Evaluator Class
 class ModelEvaluator(BayesNetInference):
     verbose = False 
     inference_time = None
 
     def __init__(self, configfile_name, datafile_test):
         if os.path.isfile(configfile_name):
-            # loads Bayesian network stored in configfile_name, where
-            # the None arguments prevent any inference at this time
+            #Loads Bayesian Network Stored In ConfigFile_Name
             super().__init__(None, configfile_name, None, None)
             self.inference_time = time.time()
 
-        # reads test data using code from DataReader
+        #Reads Test Data Using Code From DataReader
         self.csv = CSV_DataReader(datafile_test)
         
-        # Apply discretization checks here if necessary
+        #Apply Discretization Checks
         self.discretize_target_variable()
 
-        # generates performance results from the predictions above  
+        #Generates Performance Results From Above Predictions 
         self.inference_time = time.time()
         true, pred, prob = self.get_true_and_predicted_targets()
         self.inference_time = time.time() - self.inference_time
         self.compute_performance(true, pred, prob)
     
     def discretize_target_variable(self):
-        # Define the discretization logic (for example, using quantiles or thresholds)
+        #Define Discretization Logic Using Quantiles Or Thresholds
         for i, data_point in enumerate(self.csv.rv_all_values):
             asf_value = float(data_point[-1])
             if asf_value < 0.1:
@@ -55,35 +54,33 @@ class ModelEvaluator(BayesNetInference):
         Y_pred = []
         Y_prob = []
 
-        # Define threshold sets
+        #Define Threshold Sets
         threshold_one = set(["High"])
-        zero_values = set(["Low", "Medium"])  # Adjust according to discretization
+        zero_values = set(["Low", "Medium"])
 
-        # Loop through data points to categorize targets
+        #Loop Through Data Points To Categorize Targets
         for i in range(len(self.csv.rv_all_values)):
             data_point = self.csv.rv_all_values[i]
             target_value = data_point[len(self.csv.rand_vars) - 1]
 
-            # Classify based on target_value
+            #Classify Based On Target_Value
             if target_value in threshold_one:
                 Y_true.append(1)
             elif target_value in zero_values:
                 Y_true.append(0)
             else:
-                # Handle other cases or log unknown values for debugging
+                #Handle Or Log Unknown Values For Debugging
                 print(f"Unknown target value: {target_value}")
             
-            # Probabilistic prediction logic placeholder
-            Y_pred.append(1 if target_value in threshold_one else 0)  # Modify as necessary
-            Y_prob.append(float(target_value) if target_value in ["0", "1"] else 0.5)  # Example adjustment
+            #Probabilistic Prediction Logic Placeholder
+            Y_pred.append(1 if target_value in threshold_one else 0)
+            Y_prob.append(float(target_value) if target_value in ["0", "1"] else 0.5)
 
         return Y_true, Y_pred, Y_prob
 
-    # returns a probability distribution using Inference By Enumeration
+    #Returns Probability Distribution Using Inference By Enumeration
     def get_predictions_from_BayesNet(self, data_point, nbc):
-        # forms a probabilistic query based on the predictor variable,
-        # the evidence (non-predictor variables), and the values of
-        # the current data point (test instance) given as argument
+        #Forms Probabilistic Query Based On Predictor Variable
         evidence = ""
         for var_index in range(0, len(self.csv.rand_vars)-1):
             evidence += "," if len(evidence)>0 else ""
@@ -91,25 +88,19 @@ class ModelEvaluator(BayesNetInference):
         prob_query = "P(%s|%s)" % (self.csv.predictor_variable, evidence)
         self.query = bnu.tokenise_query(prob_query, False)
 
-        # sends query to BayesNetInference and get probability distribution
+        #Sends Query To BayesNetInference And Get Probability Distribution
         self.prob_dist = self.enumeration_ask()
         normalised_dist = bnu.normalise(self.prob_dist)
         if self.verbose: print("%s=%s" % (prob_query, normalised_dist))
 
         return normalised_dist
 
-    # prints model performance according to the following metrics:
-    # balanced accuracy, F1 score, AUC, Brier score, KL divergence,
-    # and training and test times. But note that training time is
-    # dependent on model training externally to this program, which
-    # is the case of Bayes nets trained via CPT_Generator.py    
+    #Prints Model Performance Metrics: Balanced Accuracy, F1 Score, AUC, Brier Score, KL Divergence, And Training & Test Times  
     def compute_performance(self, Y_true, Y_pred, Y_prob):
-        P = np.asarray(Y_true)+0.00001 # constant to avoid NAN in KL divergence
-        Q = np.asarray(Y_prob)+0.00001 # constant to avoid NAN in KL divergence
-
-        #print("Y_true="+str(Y_true))
-        #print("Y_pred="+str(Y_pred))
-        #print("Y_prob="+str(Y_prob))
+        #Constant To Avoid NAN In KL Divergence
+        P = np.asarray(Y_true)+0.00001
+        #Constant To Avoid NAN In KL Divergence
+        Q = np.asarray(Y_prob)+0.00001
         
         bal_acc = metrics.balanced_accuracy_score(Y_true, Y_pred)
         f1 = metrics.f1_score(Y_true, Y_pred)
@@ -127,7 +118,6 @@ class ModelEvaluator(BayesNetInference):
         print("KL Divergence="+str(kl_div))        
         print("Training Time=this number should come from the CPT_Generator!")
         print("Inference Time="+str(self.inference_time)+" secs.")
-
 
 if __name__ == "__main__":
     if len(sys.argv) != 3:
