@@ -11,7 +11,7 @@ X = Data.drop(columns=['CDR'])
 Y = Data['CDR']
 
 #Ensure Dementia Folder Is Present
-os.makedirs("data/Dementia", exist_ok=True)
+os.makedirs("Data/Dementia/", exist_ok=True)
 
 #Set Up KFold Cross-Validation
 kf = KFold(n_splits=5, shuffle=True, random_state=42)
