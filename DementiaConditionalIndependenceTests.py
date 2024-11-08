@@ -5,11 +5,7 @@ import pandas as pd
 #Definition Of Directed Acyclic Graphs (Predefined Structures)
 edges = [('CDR', 'Subject_ID'),('CDR', 'MRI_ID'),('CDR', 'Group'),('CDR', 'Visit'),('CDR', 'MR_Delay'),('CDR', 'M/F'),('CDR', 'Hand'),('CDR', 'Age'),('CDR', 'EDUC'),('CDR', 'SES'),('CDR', 'MMSE'),('CDR', 'eTIV'),('CDR', 'nWBV'),('CDR', 'ASF')]
 
-<<<<<<< HEAD
 #Set Training Data, Network Structure, And Type Of Conditional Independence Test
-=======
-#Declare Training Data, Network Structure, and Type Of Conditional Independence Test
->>>>>>> 0e49c7a40e5aa6b5207191d6e12a6e2e2bf12178
 TRAINING_DATA = './data/dementia_data-MRI-features.csv'
 NETWORK_STRUCTURE = edges
 CONDITIONAL_INDEPENDENCE_TEST = 'cressie_read'

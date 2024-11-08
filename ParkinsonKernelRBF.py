@@ -14,7 +14,7 @@ X_train = np.array([
 
 X_test = np.array([[3.007463,0.430788],[2.846369,0.219514]])
 
-#Function To Compute RBF Kernel Vector
+#Compute RBF Kernel Vector
 gamma = 0.5
 
 def rbf_kernel_vector(x_test, X_train, gamma):
