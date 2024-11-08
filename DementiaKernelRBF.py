@@ -1,3 +1,6 @@
+#Edited By Tarteel Alkaraan (25847208)
+#Updated On: 08 November 2024
+
 #Import Libraries
 import numpy as np
 import seaborn as sns
@@ -5,14 +8,14 @@ import matplotlib.pyplot as plt
 
 #Declare X_train And X_test
 X_train = np.array([
-    [0.696, 0.883],[0.681, 0.876],
-    [0.736, 1.046],[0.713, 1.01],
-    [0.701, 1.034],[0.71, 1.444],
-    [0.718, 1.462],[0.712, 1.039],
-    [0.711, 1.032],[0.705, 1.033]
+    [0.876,0.0],[1.046,0.5],
+    [1.01,0.5],[1.034,0.5],
+    [1.444,0.0],[1.462,0.0],
+    [1.039,0.0],[1.033,0.0],
+    [1.293,0.5],[1.286,1.0]
 ])
 
-X_test = np.array([[0.769, 1.213],[0.697, 1.096]])
+X_test = np.array([[1.495,0.5],[0.883,0.0]])
 
 #Compute RBF Kernel Vector
 gamma = 0.5
