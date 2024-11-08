@@ -34,8 +34,8 @@ class ModelEvaluator(BayesNetInference):
         #Generates Performance Results From Above Predictions
         self.inference_time = time.time()
         true, pred, prob = self.get_true_and_predicted_targets()
+        self.running_time = time.time() - self.running_time
         self.inference_time = time.time() - self.inference_time
-        sel.running_time = time.time() - self.running_time
         self.compute_performance(true, pred, prob)
     
     def discretize_target_variable(self):
@@ -44,7 +44,7 @@ class ModelEvaluator(BayesNetInference):
             asf_value = float(data_point[-1])
             if asf_value < 1.0:
                 self.csv.rv_all_values[i][-1] = "Low"
-            elif 1.0 <= asf_value < 1.5:
+            elif 1.0 <= asf_value < 0.5:
                 self.csv.rv_all_values[i][-1] = "Medium"
             else:
                 self.csv.rv_all_values[i][-1] = "High"
