@@ -4,37 +4,35 @@ import pandas as pd
 import networkx as nx
 import matplotlib.pyplot as plt
 
-#Choices Of Scoring Functions: bic, k2, bdeu, bds, aic
+#Set Training Data, Type Of Scoring Function, Number Of Iterations, And Visualise Structure
 TRAINING_DATA = './data/dementia_data-MRI-features.csv'
 SCORING_FUNCTION = 'aic'
 MAX_ITERATIONS = 20000000
 VISUALISE_STRUCTURE = True
 
 #Data Loading Using Pandas
-data = pd.read_csv(TRAINING_DATA, encoding = 'UTF-8', nrows = 374)
+data = pd.read_csv(TRAINING_DATA, encoding = 'UTF-8', nrows = 196)
 data = data.dropna()
 data = data[~data.isin([float('inf'), -float('inf')]).any(axis = 1)]
 print("DATA:\n", data)
 
-#Definition of Directed Acyclic Graph
-edges = [('CDR', 'Subject_ID'),('CDR', 'MRI_ID'),('CDR', 'Group'),('CDR', 'Visit'),
-         ('CDR', 'MR_Delay'),('CDR', 'M/F'),('CDR', 'Hand'),('CDR', 'Age'),
-		 ('CDR', 'EDUC'),('CDR', 'SES'),('CDR', 'MMSE'),('CDR', 'eTIV'),('CDR', 'nWBV'),('CDR', 'ASF')]
+#Definition Of Directed Acyclic Graph
+edges = [('status', 'name'),('status', 'MDVPFoHz'),('status', 'MDVPFhiHz'),('status', 'MDVPFloHz'),('status', 'MDVPJitter%'),('status', 'MDVPJitterAbs'),('status', 'MDVPRAP'),('status', 'MDVPPPQ'),('status', 'JitterDDP'),('status', 'MDVPShimmer'),('status', 'MDVPShimmerdB'),('status', 'ShimmerAPQ3'),('status', 'ShimmerAPQ5'),('status', 'MDVPAPQ'),('status', 'ShimmerDDA'),('status', 'NHR'),('status', 'HNR'),('status', 'RPDE'),('status', 'DFA'),('status', 'spread1'),('status', 'spread2'),('status', 'D2'),('status', 'PPE')]
 
-#Performs Discretisation Of Continuous Data For Columns Specified and Structure Provided Used For Training Bayesian Network
-continuous_columns = ["MR_Delay", "Age", "EDUC", "SES", "MMSE", "CDR", "eTIV", "nWBV", "ASF"]
+#Performs Discretisation Of Continuous Data For Columns Specified And Structure Provided Used For Training Bayesian Network
+continuous_columns = ["MDVPFoHz", "MDVPFhiHz", "MDVPFloHz", "MDVPJitter%", "MDVPJitterAbs", "MDVPRAP", "MDVPPPQ", "JitterDDP", "MDVPShimmer", "MDVPShimmerdB", "ShimmerAPQ3", "ShimmerAPQ5", "MDVPAPQ", "NHR", "HNR", "RPDE", "DFA", "spread1", "spread2", "D2", "PPE"]
 discrete_data = bn.discretize(data, edges, continuous_columns, max_iterations = 1, verbose = 3)
 for randvar in discrete_data:
     print("VARIABLE:",randvar)
     print(discrete_data[randvar])
 
-#Structure Learning Using Chosen Scoring Function as per SCORING_FUNCTION
+#Structure Learning Using Chosen Scoring Function As Per SCORING_FUNCTION
 model = bn.structure_learning.fit(discrete_data, methodtype = 'hillclimbsearch', scoretype = SCORING_FUNCTION, max_iter = MAX_ITERATIONS)
 num_model_edges = len(model['model_edges'])
 print("model = ", model)
 print("num_model_edges = " + str(num_model_edges))
 
-#Visualise The Learnt Structure
+#Visualise Learnt Structure
 if VISUALISE_STRUCTURE:
     G = nx.DiGraph()
     G.add_edges_from(model['model_edges'])

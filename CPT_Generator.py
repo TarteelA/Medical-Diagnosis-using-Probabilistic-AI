@@ -1,33 +1,20 @@
-#############################################################################
-# CPT_Generator.py
-#
-# This program generates Conditional Probability Tables (CPTs) into a config
-# file in order to be useful for probabilistic inference. It does that by
-# rewriting a given config file without CPTS. The new CPTs are derived from
-# the given data file (in CSV format) -- compatible with the config file.
-# This program assumes Laplacian smoothing (with l=1 to avoid 0 probabilities)
-#
-# Depending on the dataset and Bayes net structure, this r may take some
-# minutes instead of seconds to generate CPTs. So be patient when running it.
-#
-# WARNING: This code has not been thoroughly tested.
-#
-# Version: 1.0, Date: 08 October 2022, first version
-# Contact: hcuayahuitl@lincoln.ac.uk
-#############################################################################
+#Edited By Tarteel Alkaraan (25847208)
+#Updated On: 07 November 2024
 
+#Import Libraries
 import sys
 from BayesNetReader import BayesNetReader
 from DataReader import CSV_DataReader
 
-
+#Declare CPT Generator Class
 class CPT_Generator(BayesNetReader):
     configfile_name = None
     bn = None
     nbc = None
     countings = {}
     CPTs = {}
-    constant_l = 1  # to avoid zero probabilities
+    #Constant_L Set To One To Avoid Zero Probabilities
+    constant_l = 1  
 
     def __init__(self, configfile_name, datafile_name):
         self.configfile_name = configfile_name
@@ -47,14 +34,14 @@ class CPT_Generator(BayesNetReader):
             p = p.replace(')', ' ').replace('\ufeff', '')
             tokens = p.split("|")
 
-            # generate countings for prior probabilities
+            #Generate Countings For Prior Probabilities
             if len(tokens) == 1:
                 variable = tokens[0].split(' ')[1].replace('\ufeff', '')
                 variable_index = self.get_variable_index(variable)
                 counts = self.initialise_counts(variable)
                 self.get_counts(variable_index, None, counts)
 
-            # generate countings for conditional probabilities
+            #Generate Countings For Conditional Probabilities
             if len(tokens) == 2:
                 variable = tokens[0].split(' ')[1].replace('\ufeff', '')
                 variable_index = self.get_variable_index(variable)
@@ -77,7 +64,7 @@ class CPT_Generator(BayesNetReader):
             variable = tokens[0].replace("P(", "").replace('\ufeff', '')
             cpt = {}
 
-            # generate prior probabilities
+            #Generate Prior Probabilities
             if len(tokens) == 1:
                 _sum = 0
                 for key, count in counts.items():
@@ -87,7 +74,7 @@ class CPT_Generator(BayesNetReader):
                 for key, count in counts.items():
                     cpt[key] = (count+self.constant_l)/(_sum+Jl)
 
-            # generate conditional probabilities
+            #Generate Conditional Probabilities
             if len(tokens) == 2:
                 parents_values = self.get_parent_values(counts)
                 for parents_value in parents_values:
@@ -132,13 +119,13 @@ class CPT_Generator(BayesNetReader):
         counts = {}
 
         if parents is None:
-            # initialise counts of variables without parents
+            #Initialise Counts Of Variables Without Parents
             for var_val in self.csv.rv_key_values[variable]:
                 if var_val not in counts:
                     counts[var_val] = 0
 
         else:
-            # enumerate all sequence values of parent variables
+            #Enumerate All Sequence Values Of Parent Variables
             parents_values = []
             last_parents_values = []
             for i in range(0, len(parents)):
@@ -153,7 +140,7 @@ class CPT_Generator(BayesNetReader):
                 last_parents_values = parents_values.copy()
                 parents_values = []
 
-            # initialise counts of variables with parents
+            #Initialise Counts Of Variables With Parents
             for var_val in self.csv.rv_key_values[variable]:
                 for par_val in last_parents_values:
                     counts[var_val+'|'+par_val] = 0
@@ -161,13 +148,13 @@ class CPT_Generator(BayesNetReader):
         return counts
 
     def get_counts(self, variable_index, parent_indexes, counts):
-        # accumulate countings
+        #Accumulate Countings
         for values in self.csv.rv_all_values:
             if parent_indexes is None:
-                # case: prior probability
+                #Case Prior Probability
                 value = values[variable_index]
             else:
-                # case: conditional probability
+                #Case Conditional Probability
                 parents_values = ""
                 for parent_index in parent_indexes:
                     value = values[parent_index]
@@ -214,7 +201,6 @@ class CPT_Generator(BayesNetReader):
                     cfg_file.write(line)
                     cfg_file.write('\n')
                 cfg_file.write('\n')
-
 
 if __name__ == "__main__":
     if len(sys.argv) != 3:

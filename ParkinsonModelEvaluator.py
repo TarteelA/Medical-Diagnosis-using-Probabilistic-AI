@@ -67,9 +67,9 @@ class ModelEvaluator(BayesNetInference):
         # Define the discretization logic (for example, using quantiles or thresholds)
         for i, data_point in enumerate(self.csv.rv_all_values):
             asf_value = float(data_point[-1])
-            if asf_value < 0.4:
+            if asf_value < 0.1:
                 self.csv.rv_all_values[i][-1] = "Low"
-            elif 0.4 <= asf_value < 0.5:
+            elif 0.1 <= asf_value < 0.5:
                 self.csv.rv_all_values[i][-1] = "Medium"
             else:
                 self.csv.rv_all_values[i][-1] = "High"

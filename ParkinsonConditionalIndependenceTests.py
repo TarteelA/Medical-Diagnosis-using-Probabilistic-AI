@@ -3,10 +3,10 @@ import bnlearn as bn
 import pandas as pd
 
 #Definition Of Directed Acyclic Graphs (Predefined Structures)
-edges = [('CDR', 'Subject_ID'),('CDR', 'MRI_ID'),('CDR', 'Group'),('CDR', 'Visit'),('CDR', 'MR_Delay'),('CDR', 'M/F'),('CDR', 'Hand'),('CDR', 'Age'),('CDR', 'EDUC'),('CDR', 'SES'),('CDR', 'MMSE'),('CDR', 'eTIV'),('CDR', 'nWBV'),('CDR', 'ASF')]
+edges = [('status', 'name'),('status', 'MDVPFoHz'),('status', 'MDVPFhiHz'),('status', 'MDVPFloHz'),('status', 'MDVPJitter%'),('status', 'MDVPJitterAbs'),('status', 'MDVPRAP'),('status', 'MDVPPPQ'),('status', 'JitterDDP'),('status', 'MDVPShimmer'),('status', 'MDVPShimmerdB'),('status', 'ShimmerAPQ3'),('status', 'ShimmerAPQ5'),('status', 'MDVPAPQ'),('status', 'ShimmerDDA'),('status', 'NHR'),('status', 'HNR'),('status', 'RPDE'),('status', 'DFA'),('status', 'spread1'),('status', 'spread2'),('status', 'D2'),('status', 'PPE')]
 
 #Set Training Data, Network Structure, And Type Of Conditional Independence Test
-TRAINING_DATA = './data/dementia_data-MRI-features.csv'
+TRAINING_DATA = './data/parkinsons_data-VOICE-features.csv'
 NETWORK_STRUCTURE = edges
 CONDITIONAL_INDEPENDENCE_TEST = 'cressie_read'
 

@@ -1,27 +1,20 @@
-#############################################################################
-# CSV_DataReader.py
-#
-# This program is the data reading code of the Naive Bayes classifier from week 1.
-# It assumes the existence of data in CSV format, where the first line contains
-# the names of random variables -- the last being the variable to predict.
-#
-# Version: 1.1, Date: 1 November 2024
-# Contact: hcuayahuitl@lincoln.ac.uk
-#############################################################################
+#Edited By Tarteel Alkaraan (25847208)
+#Updated On: 07 November 2024
 
+#Declare CSV Data Reader Class
 class CSV_DataReader:
     def __init__(self, file_name):
         if file_name is None:
             raise ValueError("Error: No file name provided.")
         
-        # Initialize class attributes
+        #Initialize Class Attributes
         self.rand_vars = []
         self.rv_key_values = {}
         self.rv_all_values = []
         self.predictor_variable = None
         self.num_data_instances = 0
 
-        # Read the data from the provided file
+        #Read Data From Provided File
         self.read_data(file_name)
 
     def read_data(self, data_file):
@@ -30,29 +23,31 @@ class CSV_DataReader:
 
         try:
             with open(data_file, encoding='UTF-8') as csv_file:
-                first_line = True  # Track if we're reading the header
+                #Track If We Are Reading Header
+                first_line = True  
                 for line in csv_file:
                     line = line.strip().replace('\ufeff', '')
                     if len(line) == 0:
-                        continue  # Skip empty lines
+                        #Skip Empty Lines
+                        continue  
 
                     values = line.split(',')
                     if first_line:
-                        # Read the header line
+                        #Read Header Line
                         self.rand_vars = [var.replace('\ufeff', '').strip() for var in values]
                         for variable in self.rand_vars:
                             self.rv_key_values[variable] = []
                         first_line = False
                     else:
-                        # Read the data lines
+                        #Read Data Lines
                         self.rv_all_values.append(values)
                         self.update_variable_key_values(values)
                         self.num_data_instances += 1
 
-            # Set the predictor variable
+            #Set Predictor Variable
             self.predictor_variable = self.rand_vars[-1]
 
-            # Debugging outputs
+            #Debugging Outputs
             print("RANDOM VARIABLES=%s" % (self.rand_vars))
             print("VARIABLE KEY VALUES=%s" % (self.rv_key_values))
             print("VARIABLE VALUES=%s" % (self.rv_all_values))
@@ -66,13 +61,14 @@ class CSV_DataReader:
 
     def update_variable_key_values(self, values):
         for i, variable in enumerate(self.rand_vars):
-            if i < len(values):  # Ensure the index is within bounds
+            #Ensure Index Is Within Bounds
+            if i < len(values):  
                 value_in_focus = values[i]
                 if value_in_focus not in self.rv_key_values[variable]:
                     self.rv_key_values[variable].append(value_in_focus)
 
     def get_true_values(self):
-        """ Extract the true values for the predictor variable. """
+        #Extract True Values For Predictor Variable
         if self.predictor_variable is None:
             print("No predictor variable set. Cannot retrieve true values.")
             return []

@@ -130,12 +130,10 @@ class ModelEvaluator(BayesNetInference):
     # dependent on model training externally to this program, which
     # is the case of Bayes nets trained via CPT_Generator.py    
     def compute_performance(self, Y_true, Y_pred, Y_prob):
-        P = np.asarray(Y_true)+0.00001 # constant to avoid NAN in KL divergence
-        Q = np.asarray(Y_prob)+0.00001 # constant to avoid NAN in KL divergence
-
-        #print("Y_true="+str(Y_true))
-        #print("Y_pred="+str(Y_pred))
-        #print("Y_prob="+str(Y_prob))
+        #Constant To Avoid NAN In KL Divergence
+        P = np.asarray(Y_true)+0.00001
+        #Constant To Avoid NAN In KL Divergence
+        Q = np.asarray(Y_prob)+0.00001
         
         bal_acc = metrics.balanced_accuracy_score(Y_true, Y_pred)
         f1 = metrics.f1_score(Y_true, Y_pred)
@@ -153,7 +151,6 @@ class ModelEvaluator(BayesNetInference):
         print("KL Divergence="+str(kl_div))        
         print("Training Time=this number should come from the CPT_Generator!")
         print("Inference Time="+str(self.inference_time)+" secs.")
-
 
 if __name__ == "__main__":
     if len(sys.argv) != 3:
